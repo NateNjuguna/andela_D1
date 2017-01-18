@@ -1,41 +1,34 @@
-from abc import ABC
-import random
+import abc, random, datetime
 
-class Institution(object):
-	name = "Andela Co"
-	def __init__(self):
-		self.registration_date = 
+class Institution(abc.ABCMeta('ABC', (object,), {})):
+	registration_date = datetime.date.today()
 	
 	def get_registration_date(self):
-		return self.registration_date = 
+		return self.registration_date
 	
 	@abc.abstractmethod
 	def mission(self):
 		pass
 
 class Department(object):
-	employees = []
 	
-	def __init__(self, name, organisation):
+	def __init__(self, name):
 		self.name = name
 	
-	def add_employee(self, employee_id):
-		employees.append(employee_id)
-		return self
-		
-	def remove_employee(self, employee_id):
-		employees.pop(employees.index(employee_id));
-		return self
-		
-	def generate_job_id(self):
-		return random.randint(1000, 5000, 2)
-		
-class Employee(object, Institution, Department):
+	@classmethod
+	def generate_job_id(self, cls):
+		return random.randint(1000, 5000)
+
+class Employee(Institution, Department):
 	
-	def __init__(self, name, job_id):
+	def __init__(self, name, dept):
 		self.name = name
-		self.job_id = generate_job_id()
-		add_employee(self.job_id)
+		self.department = Department(dept)
+		self.id = Department.generate_job_id(self.department)
 		
 	def mission(self):
-		return self.name + ' want to be amongst the top world class developers'
+		return 'I, ' + self.name + ' - ' + str(self.id) + ', want to be amongst the top world class developers'
+		
+emp = Employee('Nathan', 'IT')
+print emp.mission()
+print 'I was registered on ' + unicode(emp.get_registration_date())
